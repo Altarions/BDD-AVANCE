@@ -41,3 +41,8 @@ Pour noter le projet on prendra en compte :
 • La présentation et la clarté du compte rendu (distribution et organisation des tâches, démarche technique,
 mise en valeur du travail effectué, difficultés rencontrées, etc.).
 
+
+## Entrepot de données
+
+https://www.kaggle.com/datasets/hugomathien/soccer?sort=most-comments&page=2
+
