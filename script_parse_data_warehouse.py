@@ -20,6 +20,7 @@ with open('fact_table_before_script.csv', mode='r') as match_csv:
     tab_away_team_pos = []
     tab_country_id = []
     tab_date = []
+    tab_league_id = []
 
     #Ici, row est une ligne représentant un match
     for row in csv_reader:
@@ -87,6 +88,7 @@ with open('fact_table_before_script.csv', mode='r') as match_csv:
             tab_date.append(row["date"])
             tab_home_team_pos.append("")
             tab_away_team_pos.append("")
+            tab_league_id.append(row["league_id"])
 
         for elt in tab_match_goals:
             for child in elt:
@@ -105,6 +107,7 @@ with open('fact_table_before_script.csv', mode='r') as match_csv:
             tab_date.append(row["date"])
             tab_home_team_pos.append("")
             tab_away_team_pos.append("")
+            tab_league_id.append(row["league_id"])
 
         for elt in tab_match_shotoff:
             for child in elt:
@@ -123,11 +126,11 @@ with open('fact_table_before_script.csv', mode='r') as match_csv:
             tab_date.append(row["date"])
             tab_home_team_pos.append("")
             tab_away_team_pos.append("")
+            tab_league_id.append(row["league_id"])
 
         for elt in tab_match_foulcommit:
             for child in elt:
                 if child.tag == "team":
-                    #print(child.tag, " : ", child.text)
                     tab_involved_team_id.append(child.text)
 
             tab_event_id.append(compt)
@@ -141,6 +144,7 @@ with open('fact_table_before_script.csv', mode='r') as match_csv:
             tab_date.append(row["date"])
             tab_home_team_pos.append("")
             tab_away_team_pos.append("")
+            tab_league_id.append(row["league_id"])
 
         for elt in tab_match_corner:
             for child in elt:
@@ -159,6 +163,7 @@ with open('fact_table_before_script.csv', mode='r') as match_csv:
             tab_date.append(row["date"])
             tab_home_team_pos.append("")
             tab_away_team_pos.append("")
+            tab_league_id.append(row["league_id"])
 
         for elt in tab_match_cross:
             for child in elt:
@@ -177,6 +182,7 @@ with open('fact_table_before_script.csv', mode='r') as match_csv:
             tab_date.append(row["date"])
             tab_home_team_pos.append("")
             tab_away_team_pos.append("")
+            tab_league_id.append(row["league_id"])
 
         for elt in tab_match_card:
             for child in elt:
@@ -194,6 +200,7 @@ with open('fact_table_before_script.csv', mode='r') as match_csv:
             tab_date.append(row["date"])
             tab_home_team_pos.append("")
             tab_away_team_pos.append("")
+            tab_league_id.append(row["league_id"])
 
         if len(tab_match_possession) > 0:
             elt_pos = tab_match_possession[-1]
@@ -215,10 +222,11 @@ with open('fact_table_before_script.csv', mode='r') as match_csv:
             tab_country_id.append(row["country_id"])
             tab_date.append(row["date"])
             tab_involved_team_id.append("")
+            tab_league_id.append(row["league_id"])
 
 # We overwrite the csv file with the retrieved data
 with open('fact_table_after_script.csv', mode='w', newline='') as new_csv:
-    fieldnames = ['event_id', 'type','home_team_id','away_team_id','match_id','country_id','date','involved_team_id','home_team_pos','away_team_pos']
+    fieldnames = ['event_id', 'type','home_team_id','away_team_id','match_id','country_id','league_id','date','involved_team_id','home_team_pos','away_team_pos']
     writer = csv.DictWriter(new_csv, fieldnames=fieldnames)
 
     writer.writeheader()
@@ -229,11 +237,12 @@ with open('fact_table_after_script.csv', mode='w', newline='') as new_csv:
 
         writer.writerow(
             {'event_id': tab_event_id[i],
-             'type': tab_type[i] ,
+             'type': tab_type[i],
              'home_team_id': tab_home_team_id[i],
              'away_team_id': tab_away_team_id[i],
              'match_id': tab_match_id[i],
              'country_id': tab_country_id[i],
+             'league_id': tab_league_id[i],
              'date': tab_date[i],
              'involved_team_id': tab_involved_team_id[i],
              'home_team_pos': tab_home_team_pos[i],
