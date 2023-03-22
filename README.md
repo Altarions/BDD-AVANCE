@@ -1,48 +1,45 @@
 # BDD-AVANCE
-## Travail Dirigé et Projet
-INTÉGRATION ET ENTREPÔTS DE DONNÉES
-### Description
-L’objectif de ce projet est d’intégrer des données dans un entrepôt de données. Chaque quadrinôme doit définir un sujet d’entrepôt différent. Le choix du sujet est libre, cependant, le rapprochement avec un exemple réel contera pour la note du projet.
-Ce projet sera noté par une soutenance de projet (date à définir) et par un compte rendu (document pdf).
+## Description
 
-N’hésitez pas à chercher des datasets sur les données ouvertes disponibles sur internet. Voici quelques exemples de sujets :
+Ce projet a pour but de réaliser un entrepôt de données afin de faire des analyses sur des matchs de football européens.
 
-• Analyse du marché de la location chez Airbnb.
+## Jeu de données d'origine
+Toutes les informations sont sur Kaggle : https://www.kaggle.com/datasets/hugomathien/soccer
 
-• Analyse du réseau du transport public et leur relation avec le covoiturage. • Trafic maritime dans le canal de La Manche.
+## Etapes de construction
+Pour retrouver le même entrepôt de données, il faut :
 
-• Analyse de stations de vélo publiques dans le monde.
+1. Télécharger sur Kaggle le .sqlite du jeu de données.
+1. Ensuite, réalisez les lignes de codes suivantes dans votre terminal afin de générer les fichiers csv de chaque table :
+  ```bash
+  sqlite3 database.sqlite '.headers on' '.mode csv' '.once match.csv' 'select * from match'
+  ```
+  ```bash
+  sqlite3 database.sqlite '.headers on' '.mode csv' '.once team.csv' 'select * from team'
+  ```
+  ```bash
+  sqlite3 database.sqlite '.headers on' '.mode csv' '.once country.csv' 'select * from country'
+  ```
+  ```bash
+  sqlite3 database.sqlite '.headers on' '.mode csv' '.once league.csv' 'select * from league'
+  ```
 
-### Travail demandé
+3. Maintenant que l'on a les différents csv, le plus important et de filtrer la table match afin de créer notre table de faits. Vous pouvez donc exécuter cette ligne de commande afin de générer un nouveau fichier csv avec seulement les attributs voulus :
+  ```bash
+  python3 extraction_match_csv.py
+  ```
 
-• Identifier le sujet d’analyse et les datasets à réutiliser. Vérifier que les licences de ces datasets vous permettent leur réutilisation. Prévoyez une licence pour le dataset que vous intégrerez. (Voici un graphe de compatibilité de licences http://cali.priloo.univ-nantes.fr/ld/graph)
+4. A partir d'ici, les attributs contenant les évènements sont des listes de balises xml. Il est important de garder les valeurs nécessaires (surtout de bien les séparer en valeur unique). On génère alors le fichier csv final de la table de faits avec le fichier csv de la dimension Date correspondant :
+  ```bash
+  python3 script_parse_data_warehouse.py
+  ```
 
-• Identifier les “faits numériques” qui permettront de faire des analyses.
+**Listes des fichiers csv que vous devez avoir à la fin :**
+1. team.csv
+1. country.csv
+1. league.csv
+1. match_date.csv
+1. facts.csv
 
-• Réalisez la conception de l’entrepôt de données avec un schéma en étoile ou avec un (ou plusieurs)
-agrégat(s) si vous utilisez de datastores NoSQL (Cassandra, MonetDB, MongoDB, etc.).
-
-• Les datasets utilisés peuvent être dans un format hétérogène comme CSV, JSON, EXCEL, XML, etc., vous devez intégrer les données dans un format commun selon votre schéma ou agrégats. Vous pouvez privilégier le modèle relationnel.
-
-• Donnez une dizaine de requêtes intéressantes en utilisant les opérateurs GROUP BY, GROUP BY CUBE, GROUP BY ROLLUP et GROUP BY GROUPING SETS, GROUPING, GROUPING_ID, fenêtres mobiles, RANK, PARTITION BY, top n, NTILE, etc. Si vous utilisez de datastores NoSQL cherchez les commandes nécessaires pour ces types d’analyse.
-
-• Ajouter du contrôle d’accès à votre projet. En relationnel vous devez implémenter une ou plusieurs VPD (Virtual Private Database) à votre table de faits.
-
-### Barème
-
-Pour noter le projet on prendra en compte :
-
-• Le rapprochement avec un exemple réel, la pertinence et originalité du sujet d’analyse.
-
-• La facilité de réutilisation de votre travail.
-
-• La présentation orale de votre projet (une démonstration sera un plus).
-
-• La présentation et la clarté du compte rendu (distribution et organisation des tâches, démarche technique,
-mise en valeur du travail effectué, difficultés rencontrées, etc.).
-
-
-## Entrepot de données
-
-https://www.kaggle.com/datasets/hugomathien/soccer?sort=most-comments&page=2
+5. Nous avons utlisé SQLDevelopper, ce qui nous a permis de créer notre entrepôt de données en important directement les fichiers csv finaux ci-dessus.
 
