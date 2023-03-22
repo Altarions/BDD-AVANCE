@@ -1,7 +1,7 @@
 import csv
 
 # Going through match_csv to sort the data
-with open('projet/outmatch.csv', mode='r') as match_csv:
+with open('match.csv', mode='r') as match_csv:
     csv_reader = csv.DictReader(match_csv)
 
     # Create the tab for retrieve the values of some attributs
@@ -41,7 +41,7 @@ with open('projet/outmatch.csv', mode='r') as match_csv:
     
 
 # We overwrite the csv file with the retrieved data
-with open('raw-aggregate.csv', mode='w') as new_csv:
+with open('match_filtered.csv', mode='w') as new_csv:
     fieldnames = ['id', 'country_id', 'league_id', 'date', 'home_team_api_id', 'away_team_api_id', 'goal', 'shoton', 'shotoff', 'foulcommit', 'card', 'cross', 'corner', 'possession']
     writer = csv.DictWriter(new_csv, fieldnames=fieldnames)
 

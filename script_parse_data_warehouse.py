@@ -9,7 +9,7 @@ from datetime import datetime
 compt_event_id = 0
 
 # Going through match_csv to sort the data
-with open('raw-aggregate.csv', mode='r') as match_csv:
+with open('match_filtered.csv', mode='r') as match_csv:
     csv_reader = csv.DictReader(match_csv)
 
     # Create the tab for retrieve the values of some attributs
@@ -294,20 +294,17 @@ with open('match_date.csv', mode='w') as date_csv:
                             'weekday' : weekday})
 
 # We overwrite the csv file with the retrieved data
-with open('fact_table_after_script.csv', mode='w', newline='') as new_csv:
+with open('fact.csv', mode='w', newline='') as new_csv:
     fieldnames = ['event_id', 'type','home_team_id','away_team_id','match_id','country_id','league_id','date','involved_team_id','home_team_pos','away_team_pos']
     writer = csv.DictWriter(new_csv, fieldnames=fieldnames)
 
     writer.writeheader()
     
-    #This is used to count the amount of events written in the output file. This is important to limit the amount of tuples eventually added to the data warehouse,
-    #since our university doesn't allow us to insert an unlimited amount of tuples.
-    cpt = 0
     for i in range(len(tab_event_id)):
         
         # We choose only 4 leagues because SQLDeveloper can't have too many rows in the same table.
-        if (tab_league_id[i] == '4769' or tab_league_id[i] == '13274' or tab_league_id[i] == '15722' or tab_league_id[i] == '19694') and int(tab_date[i][0:4]) >= 2015:
-            cpt = cpt + 1
+        if (tab_league_id[i] == '4769' or tab_league_id[i] == '13274') and int(tab_date[i][0:4]) >= 2015:
+            
             writer.writerow(
                 {'event_id': tab_event_id[i],
                  'type': tab_type[i],
