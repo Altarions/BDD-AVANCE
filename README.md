@@ -10,6 +10,9 @@ et
 
 Mais il suffit d'enlever les conditionnelles lors des écritures des lignes du fichier facts.csv dans le script script_parse_data_warehouse.py pour lever cette restriction.
 
+### Schéma en étoile de l'entrepôt de données
+![alt text](star_schema.png "Schéma en étoile de l'entrepôt de données")
+
 ## Jeu de données d'origine
 Toutes les informations sont sur Kaggle : https://www.kaggle.com/datasets/hugomathien/soccer
 
